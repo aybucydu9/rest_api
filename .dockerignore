@@ -1,0 +1,6 @@
+__pycache__
+myEnv/
+books.sqlite
+app_book_list.py
+Procfile
+README.md
