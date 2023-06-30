@@ -32,15 +32,18 @@ def books():
             return jsonify(books)
 
     if request.method == 'POST':
-        new_author = request.form['author']
-        new_lang = request.form['language']
-        new_title = request.form['title']
+        #if request.is_json:
+        #    data = request.json
+        data = request.form
+        new_author = data.get('author')
+        new_lang = data.get('language')
+        new_title = data.get('title')
         sql = """ INSERT INTO book (author, language, title)
                   VALUES (%s, %s, %s)"""
 
         cursor = cursor.execute(sql, (new_author, new_lang, new_title))
         conn.commit()
-        return f"Book created successfully", 201
+        return "Book created successfully", 201
     
 @app.route('/book/<int:id>', methods=['GET', 'PUT', 'DELETE'])
 def single_book(id):
@@ -85,4 +88,5 @@ def single_book(id):
 
 
 if __name__== '__main__':
-    app.run()
+    app.run(debug=True)
+#TODO: change debug mode back
