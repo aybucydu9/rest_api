@@ -1,11 +1,13 @@
+import os
 from flask import Flask, request, jsonify
-#from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
+from myapp import db, create_app
 from models import Book
-from myapp import db, create_production_app, create_test_app
 
-app = create_production_app()
-# app = create_test_app()
-# app.app_context().push()
+app = create_app()
+
+with app.app_context():
+    db.create_all()
 
 @app.route('/books', methods = ['GET', 'POST'])
 def books():
