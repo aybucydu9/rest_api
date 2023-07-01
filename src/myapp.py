@@ -7,7 +7,7 @@ db = SQLAlchemy()
 
 def create_app():
     app = Flask(__name__)
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///production.db"
+    app.config["SQLALCHEMY_DATABASE_URI"]  = os.environ['POSTGRESQL_URL']
     # Dynamically bind SQLAlchemy to application
     db.init_app(app)
     app.app_context().push()
