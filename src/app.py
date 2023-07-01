@@ -1,22 +1,11 @@
-import os
 from flask import Flask, request, jsonify
-from flask_sqlalchemy import SQLAlchemy
-# from flask_session import Session
-import json
-import pymysql
+#from flask_sqlalchemy import SQLAlchemy
+from models import Book
+from myapp import db, create_production_app, create_test_app
 
-app = Flask(__name__)
-
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ['DB_conn']
-
-db = SQLAlchemy(app)
-
-# Create Model
-class Book(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    author = db.Column(db.String(200), nullable=False)
-    language = db.Column(db.String(200), nullable=False)
-    title = db.Column(db.String(200), nullable=False)
+app = create_production_app()
+# app = create_test_app()
+# app.app_context().push()
 
 @app.route('/books', methods = ['GET', 'POST'])
 def books():
